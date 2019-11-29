@@ -12,8 +12,10 @@ class App extends Component {
       <Router>
         <Nav/>
         <Jumbotron> <h1>(React) Google Books Search</h1> </Jumbotron>
-        <Search/>
-        <Saved/>
+        <Switch>
+          <Route exact path="/search" component={Search} />
+          <Route exact path="/saved" component={Saved} />
+        </Switch>
       </Router>
     );
   }

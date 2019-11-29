@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
@@ -12,12 +11,13 @@ class Search extends Component {
         books: []
     }
 
-
-
+    saveBook(book) {
+        API.saveBook(book)
+        alert("Book saved!");
+    }
 
     componentDidMount() {
     }
-
 
 
     handleInputChange = event => {
@@ -56,9 +56,6 @@ class Search extends Component {
 
     render() {
         return (<Container fluid>
-            {/* <Row> */}
-
-
             <form>
                 <Input
                     value={this.state.title}
@@ -73,29 +70,28 @@ class Search extends Component {
                     Search
                   </FormBtn>
             </form>
-
-            {/* </Row> */}
             {this.state.books.length ? (
-                <List>
-                    {this.state.books.map(book => (
-                        <div>
+                <div>
+                    <br></br>
+                    <List>
+                        {this.state.books.map(book => (
+                            <div>
 
-                            <ListItem key={book._id}>
-                                <FormBtn>
-                                    Save
+                                <ListItem key={book._id}>
+                                    <FormBtn onClick={() => {
+                                        this.saveBook(book);
+                                    }}>
+                                        Save
                                 </FormBtn>
-                                <FormBtn>
-                                    Delete
-                                </FormBtn>
 
-                                <img src={book.image} />
-                                <strong><a href={book.link}>{book.title} by {book.authors}</a></strong>
-                                <p>{book.description}</p>
-                            </ListItem>
-
-                        </div>
-                    ))}
-                </List>
+                                    <img src={book.image} />
+                                    <strong><a href={book.link}>{book.title} by {book.authors}</a></strong>
+                                    <p>{book.description}</p>
+                                </ListItem>
+                            </div>
+                        ))}
+                    </List>
+                </div>
             ) : (
                     <h3>No Results to Display</h3>
                 )}
